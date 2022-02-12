@@ -18,8 +18,10 @@ void setup(){
     Serial.begin(115200);
     mpu.begin();
 }
+
 void loop(){
-    PrintVec3(MPU9250valuesToAngles(mpu.GetAccelerometerValues()));
-    Serial.println("");
+    auto vec = MPU9250valuesToAngles(mpu.GetAccelerometerValues());
+    Serial.println(vec);
 }
+
 ```
