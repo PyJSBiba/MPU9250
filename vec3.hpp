@@ -51,17 +51,24 @@ public:
     vec3 Normalized(){
         return *this / this->length();
     }
+
+    operator String(){
+        String str = "x: ";
+        str += String(x,3);
+        str += String(" y: ");
+        str += String(y,3);
+        str += String(" z: ");
+        str += String(z,3);
+        return str;
+    }
+
     vec3(){}
     vec3(const float& x) : x(x){}
     vec3(const float& x, const float& y) : x(x), y(y){}
     vec3(const float& x, const float& y, const float& z) : x(x), y(y), z(z){}
 };
 
-void PrintVec3(const vec3& vec){
-    Serial.print("x: ");
-    Serial.print(vec.x);
-    Serial.print(" y: ");
-    Serial.print(vec.y);
-    Serial.print(" z: ");
-    Serial.print(vec.z);
-}
+typedef union VecPacket{
+    vec3 Vec;
+    char Packet[sizeof(vec3)];
+};
