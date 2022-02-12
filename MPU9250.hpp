@@ -58,7 +58,8 @@ class MPU9250{
     static constexpr const size_t&& addr = 0x68;
     static constexpr const size_t&& mag_addr = 0x0C;
 
-
+    uint8_t Buf[14];
+    uint8_t Mag[7];
 public:
     void begin(){
         I2CwriteByte(addr,29,0x06);
@@ -69,7 +70,6 @@ public:
         I2CwriteByte(mag_addr,0x0A,0x02);
     }
     vec3 GetAccelerometerValues(){
-        uint8_t Buf[14];
         I2Cread(addr,0x3B,14,Buf);
         return vec3((float)(-(Buf[0]<<8 | Buf[1])),(float)(-(Buf[2]<<8 | Buf[3])),(float)((Buf[4]<<8|Buf[5])));
     }
@@ -83,7 +83,6 @@ public:
         return delta;
     }
     vec3 GetGyroscopeValues(){
-        uint8_t Buf[14];
         I2Cread(addr,0x3B,14,Buf);
         return vec3((float)(-(Buf[8]<<8 | Buf[9])),(float)(-(Buf[10]<<8 | Buf[11])),(float)((Buf[12]<<8 | Buf[13])));
     }
@@ -95,7 +94,6 @@ public:
         return delta;
     }
     vec3 GetMagnetometer(){
-        uint8_t Mag[7];
         I2Cread(mag_addr,0x03,7,Mag);
         return vec3((float)(-(Mag[3]<<8 | Mag[2])),(float)(-(Mag[1]<<8 | Mag[0])),(float)(-(Mag[5]<<8 | Mag[4])));
     }
